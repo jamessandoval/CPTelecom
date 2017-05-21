@@ -1,0 +1,25 @@
+{
+  "name": "cptelecom",
+  "version": "1.0.0",
+  "description": "Web application that builds a community of practice for people who work from home.",
+  "main": "app.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/jamessandoval/CPTelecom.git"
+  },
+  "author": "",
+  "license": "MIT",
+  "bugs": {
+    "url": "https://github.com/jamessandoval/CPTelecom/issues"
+  },
+  "homepage": "https://github.com/jamessandoval/CPTelecom#readme",
+  "dependencies": {
+    "body-parser": "^1.17.2",
+    "express": "^4.15.3",
+    "express-handlebars": "^3.0.0",
+    "mysql": "^2.13.0"
+  }
+}
