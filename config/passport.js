@@ -11,7 +11,7 @@ module.exports = function(passport) {
 
 
     // Required for persistent sessions
-    //  
+    //
 
     passport.serializeUser(function(user, done) {
         done(null, user.id)
@@ -33,13 +33,14 @@ module.exports = function(passport) {
             passReqToCallback: true
 
         }, function(req, email, password, done) {
+          if (req.body.password !== req.body.passwordDup) {
+            return done(null, false, req.flash('message', 'Passwords do not match'));
+          }
             connection.query("SELECT * FROM user WHERE email = ?", [email], function(err, rows) {
                 if (err)
                     return done(err);
                 if (rows.length) {
-                    return done(null, false, req.flash('signupMessage', 'That email is already taken.'));
-
-                    
+                    return done(null, false, req.flash('message', 'That email is already taken.'));
 
                 } else {
 
@@ -55,7 +56,7 @@ module.exports = function(passport) {
 
                         connection.query(insertQuery, [newUserQuery.email, newUserQuery.password], function(err, rows) {
                             newUserQuery.id = rows.insertId;
-                            return done(null, newUserQuery);
+                            return done(null, newUserQuery, req.flash('message', 'Account Created and Logged In'));
                         });
                     });
 
@@ -71,25 +72,21 @@ module.exports = function(passport) {
         usernameField: 'email',
         passwordField: 'password',
         passReqToCallback: true
-
     }, function(req, email, password, done) {
         connection.query("SELECT * FROM user WHERE email = ? ", [email], function(err, rows) {
             if (err)
                 return done(err);
             if (!rows.length) {
-                console.log("username not recognized");
-                return done(null, false);
+                return done(null, false, req.flash('message', 'Email address not found'));
             }
-
             bcrypt.compare(password, rows[0].password, function(err, res) {
                 // res == true
                 if(res){
-                    return done(null, rows[0]);
-                     console.log("password match - should log in.");
+                    return done(null, rows[0], req.flash('message', 'Login Successful'));
                 } else {
-                   
+                    return done(null, false, req.flash('message', 'Incorrect Password'));
                 }
-                
+
             });
 
         });

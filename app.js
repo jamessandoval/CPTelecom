@@ -1,5 +1,4 @@
 // app.js
-
 var express = require('express'),
     user = require('./routes/user'),
     routes = require('./routes/index'),
@@ -7,11 +6,10 @@ var express = require('express'),
     handlebars = require('express-handlebars'),
     passport = require('passport'),
     flash = require('connect-flash'),
-    mysql = require('mysql'),
-    session = require('express-session'),
-    mySQlStore = require('express-mysql-session')(session);
+    session = require('express-session');
 
 var path = require('path');
+require('./config/passport')(passport);
 
 var app = express();
 
@@ -25,37 +23,14 @@ app.use(express.static(path.join(__dirname, 'public')));
 app.use(bodyParser.urlencoded({ extended: false }));
 app.use(bodyParser.json());
 
-require('./config/passport')(passport);
-
-app.use(passport.initialize());
-
-var mysql = require('mysql');
-var session = require('express-session');
-var MySQLStore = require('express-mysql-session')(session);
- 
-var options = {
-    host: 'localhost',
-    user: 'root',
-    password: 'Halcyon17',
-    database: 'cptelecom',
-    checkExpirationInterval: 900000,// How frequently expired sessions will be cleared; milliseconds. 
-    expiration: 86400000,// The maximum age of a valid session; milliseconds. 
-    createDatabaseTable: true,
-};
-
-var connection = mysql.createConnection(options);
-var sessionStore = new mySQlStore(options);
-
 app.use(session({
-	key: 'session_cookie', 
+	  key: 'session_cookie',
     secret: 'secret',
-    store: sessionStore,
     resave: true,
     saveUninitialized: true,
-    cookie: { secure: true }
-}))
+}));
 
-
+app.use(passport.initialize());
 app.use(passport.session());
 
 app.set('port', 3000);
