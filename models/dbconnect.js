@@ -7,6 +7,14 @@ var connection = mysql.createConnection({
     database: 'cptelecom'
 });
 
+//attempted this to get my mysql working, it may need to come out, you appear to have done it differently
+var pool = mysql.createPool({
+    host: 'localhost',
+    user: 'root',
+    //password: 'your_password',
+    database: 'mysql'
+});
+
 connection.connect(function(err) {
     if(err) {
         console.log("error connecting to database. check db settings");
@@ -27,3 +35,4 @@ connection.query("DROP TABLE IF EXISTS test", function(err) {
 });
 
 module.exports = connection;
+module.exports.pool = pool;
