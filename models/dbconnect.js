@@ -1,11 +1,13 @@
 var mysql = require('mysql');
 
 var connection = mysql.createConnection({
-    host: 'localhost',
-    user: 'root',
-    password: 'gorillaSHARKhigh5',
-    database: 'cpt'
+    host: 'oniddb.cws.oregonstate.edu',
+    user: 'sandovja-db',
+    password: 'hzfNMZJruf3S3GyQ',
+    database: 'sandovja-db',
 });
+
+// web page url http://web.engr.oregonstate.edu/~sandovja/
 
 connection.connect(function(err) {
     if(err) {
