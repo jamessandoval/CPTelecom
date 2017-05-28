@@ -15,8 +15,7 @@ router.get('/join', function(req, res) {
 	res.render('join', {message: req.flash('message')});
 });
 
-router.post('/join', passport.authenticate('local-signup', {
-
+router.post('/join', passport.authenticate('local-signup', {	
 	successRedirect: '/',
 	failureRedirect: '/user/join',
 	failureFlash: true
@@ -35,7 +34,6 @@ router.get('/forums', ensureAthenticated, function(req, res) {
 	res.render('forums');
 });
 
-
 function ensureAthenticated(req, res, next){
 	if(req.isAuthenticated()) {
 		return next();
@@ -43,6 +41,5 @@ function ensureAthenticated(req, res, next){
 		res.redirect('/user/login');
 	}
 };
-
 
 module.exports = router;
