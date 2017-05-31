@@ -1,0 +1,39 @@
+<div class="container-fluid">
+    <div class="row">
+        <div class="col-xs-hidden col-sm-2"></div>
+        <div class="col-xs-12 col-sm-8">
+            <h1>Reviews Page</h1> 
+            {{#each review}}
+  {{{@index}}}
+  {{this.company}}
+{{/each}}
+            {{#avg}}
+            <h5>Average Reviews:</h5>
+            <h3>{{avg}}</h3> {{/avg}}
+            <p></p>
+        </div>
+        <div class="col-xs-hidden col-sm-2"></div>
+    </div>
+</div>
+<div class="container-fluid">
+    <div class="row">
+        <div class="col-xs-hidden col-sm-2"></div>
+        <div class="col-xs-12 col-sm-8">
+            <table class="table">
+                <tr>
+                    <th>Review:</th>
+                    <th>Rating:</th>
+                    <th>User</th>
+                </tr>
+                {{#review}}
+                <tr>
+                    <td>{{review}}</td>
+                    <td>{{rating}}</td>
+                    <td>Anonymous</td>
+                </tr>
+                {{/review}}
+            </table>
+        </div>
+        <div class="col-xs-hidden col-sm-2"></div>
+    </div>
+</div>

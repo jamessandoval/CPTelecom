@@ -2,8 +2,8 @@
     <div class="row">
         <div class="col-xs-hidden col-sm-2"></div>
         <div class="col-xs-12 col-sm-8">
-            <h1>Employee Search</h1>
-            <form class="form-inline" action="/employer_search" method="post">
+            <h1>Employer Search</h1>
+            <form class="form-inline" action="/employers" method="post">
                 <div class="form-group">
                     <label class="sr-only">Search</label>
                     <div class="col-sm-10">
@@ -21,16 +21,25 @@
     <div class="row">
         <div class="col-xs-hidden col-sm-2"></div>
         <div class="col-xs-12 col-sm-8">
-            <table>
+            <table class="table">
+                <tr>
+                    <th>Job Title:</th>
+                    <th>Company:</th>
+                    <th>Description:</th>
+                    <th>Date Added:</th>
+                    <th>Rating:</th>
+                    <th>Url:</th>
+                    <th>Reviews</th>
+                </tr>
                 {{#job}}
                 <tr>
-                    <td>{{title}}</td>
+                    <td>{{jobTitle}}</td>
                     <td>{{company}}</td>
-                    <td>{{summary}}</td>
-                    <td>{{date_posted}}</td>
-                    <td>{{location}}</td>
+                    <td>{{snippet}}</td>
+                    <td>{{daysAgo}}</td>
                     <td>{{rating}}</td>
-                    <td>{{url}}</td>
+                    <td><a href="{{url}}" target=="_blank">Link</a></td>
+                    <td><button type="button" class="btn btn-default btn-sm review">Review</button></td>
                 </tr>
                 {{/job}}
             </table>

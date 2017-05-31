@@ -6,9 +6,9 @@ var connection = require('../models/dbconnect.js'),
 var indeedAPI = "2648850467422389";
 // cannot exceed 25 per page
 var jobsPerPage = 25;
-var dupCount = 0;
-var addCount = 0;
 var totalJobs = 10000;
+addCount = 0;
+duplicate = 0;
 
 var job = schedule.scheduleJob('* * /12 * * *', function() {
     //runs the code here every 12 hours
@@ -30,7 +30,6 @@ function createIndeedTable() {
         if (err)
             throw err;
     });
-
     console.log("new job table built.");
 }
 
@@ -46,7 +45,7 @@ function addJob(item, index) {
         }
         if (rows.length) {
             console.log("duplicate found, not copying");
-            dupCount++;
+            duplicate++;
             return;
         } else {
             connection.pool.query("INSERT INTO indeedJobs (jobTitle, company, daysAgo, url, snippet) VALUES (?, ?, ?, ?, ?)", [item.jobtitle, item.company, item.formattedRelativeTime, item.url, item.snippet], function(err) {
@@ -54,23 +53,30 @@ function addJob(item, index) {
                     throw err;
                 } else {
                     addCount++;
-                    console.log("successfully added.");
+                    console.log("successfully added");
                 }
             });
         }
+
+        console.log("addjob: " + addCount);
+        //console.log("duplicate: " + duplicate);
+        if ((addCount + duplicate) == totalJobs) {
+            console.log("job scrape complete");
+        }
+
     });
 };
 
 
 module.exports = function() {
 
-	var startJob = 0;
+    var startJob = 0;
     connection.pool.query("SELECT * FROM indeedJobs", function(err, results) {
         // indeedJobs table exists ...drop for testing.
         if (results) {
             console.log("table exists, uncomment indeedapi line:41 to drop and rebuild.");
-            
-            /*connection.pool.query("DROP TABLE IF EXISTS indeedJobs", function(err, result) {
+
+            connection.pool.query("DROP TABLE IF EXISTS indeedJobs", function(err, result) {
                 if (err)
                     throw err;
                 else if (result) {
@@ -78,7 +84,7 @@ module.exports = function() {
                     createIndeedTable();
                 }
             });
-            */
+
         } else {
             // build a new indeedJobs table 
             createIndeedTable();
@@ -95,8 +101,8 @@ module.exports = function() {
             var jobs = JSON.parse(ret);
             //console.log(jobs);
             jobs.results.forEach(addJob);
+
+
         });
     }
-    console.log("Job scrape complete.");
 }
-

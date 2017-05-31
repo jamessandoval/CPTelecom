@@ -11,8 +11,8 @@ var connection = mysql.createConnection({
 var pool = mysql.createPool({
     host: 'localhost',
     user: 'root',
-    //password: 'your_password',
-    database: 'mysql'
+    password: 'Halcyon17',
+    database: 'cptelecom'
 });
 
 connection.connect(function(err) {
@@ -24,15 +24,17 @@ connection.connect(function(err) {
     }
 });
 
+/*
 connection.query("DROP TABLE IF EXISTS test", function(err) {
     var context = {};
     var createString = " CREATE TABLE test("  +
         "id INT PRIMARY KEY AUTO_INCREMENT";
 
     connection.query(createString, function(err) {
-        console.log("table reset");
+        //console.log("table reset");
     });
 });
+*/
 
 module.exports = connection;
 module.exports.pool = pool;
