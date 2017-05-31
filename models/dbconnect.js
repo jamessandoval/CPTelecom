@@ -1,40 +1,45 @@
 var mysql = require('mysql');
 
-var connection = mysql.createConnection({
-    host: 'localhost',
-    user: 'root',
-    password: 'Halcyon17',
-    database: 'cptelecom'
-});
-
 //attempted this to get my mysql working, it may need to come out, you appear to have done it differently
 var pool = mysql.createPool({
     host: 'localhost',
     user: 'root',
     password: 'Halcyon17',
-    database: 'cptelecom'
+    database: 'cptelecom',
+    connectionLimit: 10
 });
 
-connection.connect(function(err) {
+pool.getConnection(function(err) {
     if(err) {
         console.log("error connecting to database. check db settings");
         throw err
     } else {
-        console.log("Database is connected");
+        console.log("Database connected");
     }
 });
 
-/*
-connection.query("DROP TABLE IF EXISTS test", function(err) {
-    var context = {};
-    var createString = " CREATE TABLE test("  +
-        "id INT PRIMARY KEY AUTO_INCREMENT";
+/*connection.pool.query("INSERT INTO review (review, company, rating, user) VALUES (?, ?, ?, ?,), " [req.query.review, req.query.company, req.query.rating, req.query.user], function(err, rows){
+    if(err) throw err;
+    else{
 
-    connection.query(createString, function(err) {
-        //console.log("table reset");
-    });
-});
+        // process rows
+    }
+}
 */
 
-module.exports = connection;
+/*pool.query("DROP TABLE IF EXISTS review", function(err) {
+    var createString = "CREATE TABLE review("  +
+        "id INT PRIMARY KEY AUTO_INCREMENT," +
+        "review TEXT," + 
+        "company VARCHAR(255)," +
+        "user VARCHAR(255)," +
+        "rating INT)";
+
+    pool.query(createString, function(err) {
+        if(err) throw err;
+    });
+}); */
+
+//pool.query()
+
 module.exports.pool = pool;

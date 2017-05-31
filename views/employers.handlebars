@@ -26,20 +26,21 @@
                     <th>Job Title:</th>
                     <th>Company:</th>
                     <th>Description:</th>
-                    <th>Date Added:</th>
-                    <th>Rating:</th>
+                    <th>Date Added:</th>                   
                     <th>Url:</th>
                     <th>Reviews</th>
-                </tr>
+                    <th>Rating:</th>
+                </tr> 
                 {{#job}}
                 <tr>
                     <td>{{jobTitle}}</td>
                     <td>{{company}}</td>
                     <td>{{snippet}}</td>
                     <td>{{daysAgo}}</td>
-                    <td>{{rating}}</td>
+                    
                     <td><a href="{{url}}" target=="_blank">Link</a></td>
-                    <td><button type="button" class="btn btn-default btn-sm review">Review</button></td>
+                    <td><button type="button" class="btn btn-default btn-sm review">Reviews</button></td>
+                    <td>{{rating}}</td>
                 </tr>
                 {{/job}}
             </table>

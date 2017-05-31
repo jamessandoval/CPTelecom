@@ -3,7 +3,7 @@
 
 // ensure active class is only on active links
 $(".nav a").on("click", function() {
-    //$(".nav").find(".active").removeClass("active");
+    $(".nav").find(".active").removeClass("active");
     $(this).parent().addClass("active");
 });
 
@@ -12,6 +12,5 @@ $(".nav a").on("click", function() {
 $('.review').click(function() {
     companyReview = $(this).closest('td').prev('td').prev('td').prev('td').prev('td').prev('td').text();
     location.href = "/reviews?companyName=" + companyReview;
-    console.log(companyReview);
 
 });

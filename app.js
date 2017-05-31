@@ -9,7 +9,16 @@ var express = require('express'),
     session = require('express-session'),
 	mysql = require('mysql'),
 	path = require('path'),
-	scrapeIndeed = require('./taskRunner/indeedapi');
+	scrapeIndeed = require('./taskRunner/indeedapi'),
+	schedule = require('node-schedule');
+
+
+
+	var job = schedule.scheduleJob('* * /12 * * *', function() {
+    //runs the code here every 12 hours
+    console.log("test\n");
+    scrapeIndeed();
+});
 
 require('./config/passport')(passport);
 var app = express();
@@ -22,7 +31,7 @@ app.set('views', path.join(__dirname, 'views'));
 app.use(express.static(path.join(__dirname, 'public')));
 
 app.use(bodyParser.urlencoded({ extended: false }));
-app.use(bodyParser.json());
+app.use(bodyParser.json());	
 
 app.use(session({
 	  key: 'session_cookie',
@@ -44,5 +53,5 @@ app.use('/user', user);
 
 var server = app.listen(app.get('port'), function() {
     console.log("Server Running.");
-	scrapeIndeed();
+	//scrapeIndeed();
 })
