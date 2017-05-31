@@ -3,9 +3,9 @@ var mysql = require('mysql');
 //attempted this to get my mysql working, it may need to come out, you appear to have done it differently
 var pool = mysql.createPool({
     host: 'localhost',
-    user: 'root',
-    password: 'Halcyon17',
-    database: 'cptelecom',
+    user: 'student',
+    password: 'default',
+    database: 'student',
     connectionLimit: 10
 });
 
@@ -27,7 +27,7 @@ pool.getConnection(function(err) {
 }
 */
 
-/*pool.query("DROP TABLE IF EXISTS review", function(err) {
+pool.query("DROP TABLE IF EXISTS review", function(err) {
     var createString = "CREATE TABLE review("  +
         "id INT PRIMARY KEY AUTO_INCREMENT," +
         "review TEXT," + 
@@ -38,7 +38,7 @@ pool.getConnection(function(err) {
     pool.query(createString, function(err) {
         if(err) throw err;
     });
-}); */
+}); 
 
 //pool.query()
 
