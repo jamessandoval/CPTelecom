@@ -6,6 +6,15 @@ router.get('/', function(req, res) {
     res.render('home', { message: req.flash('message') });
 });
 
+router.get('/training', function(req, res) {
+    res.render('training', { message: req.flash('message') });
+});
+
+router.get('/jobs', function(req, res) {
+    res.render('jobs', { message: req.flash('message') });
+});
+
+
 router.get('/employers', function(req, res) {
     res.render('employers');
 });
