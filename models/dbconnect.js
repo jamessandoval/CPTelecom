@@ -3,9 +3,9 @@ var mysql = require('mysql');
 //attempted this to get my mysql working, it may need to come out, you appear to have done it differently
 var pool = mysql.createPool({
     host: 'localhost',
-    user: 'student',
-    password: 'default',
-    database: 'student',
+    user: 'root',
+    password: 'Halcyon17',
+    database: 'cptelecom',
     connectionLimit: 10
 });
 

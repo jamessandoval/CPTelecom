@@ -16,6 +16,7 @@ function createIndeedTable() {
         "url TEXT NOT NULL, " +
         "snippet TEXT NOT NULL, " +
         "date_scraped timestamp NOT NULL, " +
+        "jobkey VARCHAR(255)," + 
         "rating INT)";
     connection.pool.query(createString, function(err) {
         if (err)
@@ -24,14 +25,16 @@ function createIndeedTable() {
 }
 // check to see if item is a duplicate.
 function addJob(item, index) {
-    connection.pool.query("SELECT * FROM indeedJobs WHERE jobTitle = ? AND snippet = ?", [item.jobTitle, item.snippet], function(err, rows) {
+    console.log(index);
+    console.log(item);
+    connection.pool.query("SELECT * FROM indeedJobs WHERE jobkey = ?", [item.jobkey], function(err, rows) {
         if (err) {
             throw err;
-        }
-        if (rows.length) {
+        }else if (rows.length > 1) {
+            console.log("duplicate entry found.");
             return;
         } else {
-            connection.pool.query("INSERT INTO indeedJobs (jobTitle, company, daysAgo, url, snippet) VALUES (?, ?, ?, ?, ?)", [item.jobtitle, item.company, item.formattedRelativeTime, item.url, item.snippet], function(err) {
+            connection.pool.query("INSERT INTO indeedJobs (jobkey, jobTitle, company, daysAgo, url, snippet) VALUES (?, ?, ?, ?, ?, ?)", [item.jobkey,item.jobtitle, item.company, item.formattedRelativeTime, item.url, item.snippet], function(err) {
                 if (err) {
                     throw err;
                 } else {
@@ -52,24 +55,20 @@ module.exports = function() {
             throw err;
         else {
             createIndeedTable();
-            var loopCounter = 0;
-            while (startJob < (totalJobs)) {
-
+            while (startJob <= (totalJobs)) {
                 var url = "http://api.indeed.com/ads/apisearch?publisher=" + indeedAPI + "&format=json&l=remote&sort=date&radius=&st=&jt=&start=" + startJob + "&limit=" + jobsPerPage + "&fromage=&filter=&latlong=1&co=us&chnl=&userip=1.2.3.4&useragent=Mozilla/%2F4.0%28Firefox%29&v=2";
                 startJob += 25;
-                loopCounter = loopCounter + 1;
                 request.get(url, function(error, res, ret) {
                     // if no ret response
+                    
                     if (!ret) {
                         return;
                     }
-
                     var jobs = JSON.parse(ret);
-
-
                     jobs.results.forEach(addJob);
+                    //totalJobs = jobs.totalResults;
+                    console.log(totalJobs);
                 });
-               
             }
             return;
 

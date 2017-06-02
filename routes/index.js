@@ -19,12 +19,30 @@ router.get('/employers', function(req, res) {
     res.render('employers');
 });
 
+router.get('/jobss', function(req, res) {
+    res.render('jobs');
+});
+
+router.post('/jobs', function(req, res) {
+    connection.pool.query('SELECT * FROM indeedJobs WHERE (jobTitle LIKE ? OR snippet LIKE ?)', ['%' + req.body.search + '%', '%' + req.body.search + '%'], function(err, rows, fields) {
+        if (err) throw err;
+        console.log(req.body.search);
+        console.log(rows);
+
+        var context = {};
+        context.results = JSON.parse(JSON.stringify(rows));
+        console.log(context.results);
+        res.render('jobs', {
+            job: context.results
+        });
+    });
+});
+
 router.post('/employers', function(req, res) {
     connection.pool.query('SELECT * FROM indeedJobs WHERE company LIKE ?', ['%' + req.body.search + '%'], function(err, rows, fields) {
         if (err) throw err;
         console.log(req.body.search);
         console.log(rows);
-
         var context = {};
         context.results = JSON.parse(JSON.stringify(rows));
         console.log(context.results);

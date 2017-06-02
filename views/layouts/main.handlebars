@@ -36,8 +36,13 @@
                     <li id="employers_nav"><a href="/employers">Search Employers</a></li>
                     <li id="training_nav"><a href="/training">Training Opportunities</a></li>
                     <li id="forums_nav"><a href="/user/forums">Forums</a></li>
+                    {{#if user}}
+                    <li id="login_nav"><a href="/user/logout">Log out</a></li>
+                    {{else}}
                     <li id="login_nav"><a href="/user/login">Log In</a></li>
                     <li id="join_nav"><a href="/user/join">Join</a></li>
+                    {{/if}}
+                    
                 </ul>
             </div>
         </div>
