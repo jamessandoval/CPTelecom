@@ -7,17 +7,16 @@ var express = require('express'),
     passport = require('passport'),
     flash = require('connect-flash'),
     session = require('express-session'),
-	mysql = require('mysql'),
-	path = require('path'),
-	scrapeIndeed = require('./taskRunner/indeedapi'),
-	schedule = require('node-schedule'),
+    mysql = require('mysql'),
+    path = require('path'),
+    scrapeIndeed = require('./taskRunner/indeedapi'),
+    schedule = require('node-schedule'),
     connection = require('./models/dbconnect.js'),
-    MySQLStore = require('express-mysql-session');
+    MySQLStore = require('express-mysql-session')(session);
 
-	var job = schedule.scheduleJob('* * /12 * * *', function() {
+var job = schedule.scheduleJob('* 34 8 * *', function() {
     //runs the code here every 12 hours
-    console.log("test\n");
-    scrapeIndeed();
+        setTimeout(scrapeIndeed, 10000);
 });
 
 require('./config/passport')(passport);
@@ -31,7 +30,7 @@ app.set('views', path.join(__dirname, 'views'));
 app.use(express.static(path.join(__dirname, 'public')));
 
 app.use(bodyParser.urlencoded({ extended: false }));
-app.use(bodyParser.json());	
+app.use(bodyParser.json());
 
 var options = {
     checkExpirationInterval: 1000 * 60 * 15, // 15 min
@@ -50,11 +49,12 @@ var options = {
 var sessionStore = new MySQLStore(options, connection.pool);
 
 app.use(session({
-	  key: 'session_cookie',
+    key: 'session_cookie',
     secret: 'secret',
     resave: false,
+    store: sessionStore,
     saveUninitialized: true,
-    cookie: { secure: false}
+    cookie: { secure: false }
 }));
 
 app.use(passport.initialize());
@@ -73,12 +73,6 @@ app.set('view cache', false);
 app.use('/', routes);
 app.use('/user', user);
 
-// *** Routes ***
-app.use(function(req, res) {
-    res.status(303);
-    res.render('303');
-});
-
 app.use(function(req, res) {
     res.status(404);
     res.render('404');
@@ -92,5 +86,5 @@ app.use(function(err, req, res, next) {
 
 var server = app.listen(app.get('port'), function() {
     console.log("Server Running.");
-	//scrapeIndeed();
+    //scrapeIndeed();
 })

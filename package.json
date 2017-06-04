@@ -4,7 +4,8 @@
   "description": "Web application that builds a community of practice for people who work from home.",
   "main": "app.js",
   "scripts": {
-    "test": "echo \"Error: no test specified\" && exit 1"
+    "test": "mocha",
+    "start": "app.js"
   },
   "repository": {
     "type": "git",
@@ -16,6 +17,12 @@
     "url": "https://github.com/jamessandoval/CPTelecom/issues"
   },
   "homepage": "https://github.com/jamessandoval/CPTelecom#readme",
+  "devDependencies": {
+    "chai": "^3.5.0",
+    "chai-http": "^3.0.0",
+    "dockerode": "^2.3.1",
+    "mocha": "^3.2.0"
+  },
   "dependencies": {
     "bcryptjs": "^2.4.3",
     "body-parser": "^1.17.2",

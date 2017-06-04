@@ -1,10 +1,11 @@
 <script>
 document.getElementById("jobs_nav").classList.add("active")
 </script>
-<div class="container-fluid">
+<div class="container-fluid custom-header" id="landing">
     <div class="row">
         <div class="col-xs-hidden col-sm-2"></div>
         <div class="col-xs-12 col-sm-8">
+        <br>
             <h1>Job Search</h1>
             <form class="form-inline" action="/jobs" method="post">
                 <div class="form-group">
@@ -19,7 +20,8 @@ document.getElementById("jobs_nav").classList.add("active")
         <div class="col-xs-hidden col-sm-2"></div>
     </div>
 </div>
-<hr>
+</div>
+{{#if job}}
 <div class="container-fluid">
     <div class="row">
         <div class="col-xs-hidden col-sm-2"></div>
@@ -34,7 +36,6 @@ document.getElementById("jobs_nav").classList.add("active")
                 </tr>
                 {{#job}}
                 <tr>
-                	<td>{{id}}</td>
                     <td>{{jobTitle}}</td>
                     <td>{{company}}</td>
                     <td>{{snippet}}</td>
@@ -47,3 +48,5 @@ document.getElementById("jobs_nav").classList.add("active")
         <div class="col-xs-hidden col-sm-2"></div>
     </div>
 </div>
+{{else}}
+{{/if}}

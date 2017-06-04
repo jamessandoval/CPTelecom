@@ -1,0 +1,24 @@
+#landing {
+    position:relative;
+    top:-2em;
+}
+
+
+
+.bg-landing {
+    margin: 0 auto;
+    min-height: 100%;
+    -webkit-background-size: cover;
+    -moz-background-size: cover;
+    background-size: cover;
+    -o-background-size: cover;
+    background-position: center;
+    background-image: url("../images/working-remotely_t.jpg");
+}
+
+section { height: 100vh;}
+
+.custom-header{
+    height: 30vh;
+    background-color: #E6E6E6;
+}
