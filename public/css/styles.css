@@ -3,8 +3,6 @@
     top:-2em;
 }
 
-
-
 .bg-landing {
     margin: 0 auto;
     min-height: 100%;
@@ -21,4 +19,11 @@ section { height: 100vh;}
 .custom-header{
     height: 30vh;
     background-color: #E6E6E6;
+}
+
+#messageContainer {
+    position: absolute;
+    width:100%;
+    z-index:10;
+
 }

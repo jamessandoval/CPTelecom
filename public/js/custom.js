@@ -14,3 +14,6 @@ $('.review').click(function() {
     location.href = "/reviews?companyName=" + companyReview;
 
 });
+
+
+$('#messageContainer').hide(3000);
